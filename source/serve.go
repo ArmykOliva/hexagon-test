@@ -69,6 +69,7 @@ func main() {
 
 	server.HandleSystems(cache)
 	server.HandleVulnerabilities(cache)
+	server.HandleSearches(cache)
 
 	fmt.Println("Listening on http://localhost:3000")
 
