@@ -1,6 +1,6 @@
 package matchers
 
-import "tholian-endpoint/types"
+import "battlemap/types"
 import "strings"
 
 func parseVersionCondition(value string) (string, string, string) {

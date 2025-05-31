@@ -3,7 +3,6 @@ package structs
 import "battlemap/matchers"
 import "battlemap/types"
 import utils_path "battlemap/utils/path"
-import utils_encoding "battlemap/utils/encoding"
 import "net/url"
 import "strings"
 

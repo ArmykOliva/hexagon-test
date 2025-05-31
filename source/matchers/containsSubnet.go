@@ -1,6 +1,6 @@
 package matchers
 
-import "tholian-endpoint/types"
+import "battlemap/types"
 
 func containsSubnet(subnet_a string, subnet_b string) bool {
 

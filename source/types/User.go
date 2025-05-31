@@ -1,8 +1,5 @@
 package types
 
-import "tholian-endpoint/console"
-import utils_encoding "tholian-endpoint/utils/encoding"
-import "strconv"
 import "strings"
 
 type User struct {
@@ -40,41 +37,6 @@ func ToUser(name string, id uint16) User {
 	user.SetType("user")
 
 	return user
-
-}
-
-func (user *User) Debug() {
-
-	if user.Name != "" {
-
-		if user.ID == 0 && user.Name != "root" {
-			console.Warn("users/" + user.Name + ": Invalid ID " + strconv.FormatUint(uint64(user.ID), 10))
-		}
-
-		if user.Folder != "" && strings.HasPrefix(user.Folder, "/") == false {
-			console.Warn("users/" + user.Name + ": Invalid Folder \"" + user.Folder + "\"")
-		}
-
-		if user.Shell != "" && strings.HasPrefix(user.Shell, "/") == false {
-			console.Error("users/" + user.Name + ": Invalid Shell \"" + user.Shell + "\"")
-		}
-
-		if len(user.Groups) > 0 {
-
-			for g := 0; g < len(user.Groups); g++ {
-
-				var group = user.Groups[g]
-
-				if group.IsValid() == false {
-					console.Error("users/" + user.Name + ": Invalid Group \"" + group.Name + "\"")
-					console.Error(utils_encoding.ToJSON(group))
-				}
-
-			}
-
-		}
-
-	}
 
 }
 

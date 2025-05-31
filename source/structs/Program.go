@@ -2,7 +2,6 @@ package structs
 
 import "battlemap/matchers"
 import utils_path "battlemap/utils/path"
-import utils_encoding "battlemap/utils/encoding"
 import "strings"
 
 type Program struct {

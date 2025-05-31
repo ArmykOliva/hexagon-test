@@ -1,9 +1,9 @@
 package main
 
-import "battlemap/structs"
+// import "battlemap/structs"
 import "battlemap/server"
+import "encoding/json"
 import "fmt"
-import "http"
 import "log"
 import "net/http"
 import "os"
@@ -14,15 +14,14 @@ func main() {
 	fsys := os.DirFS("public")
 	fsrv := http.FileServer(http.FS(fsys))
 
-	data_fsys := os.DirFS("../data")
+	// data_fsys := os.DirFS("../data")
+	// system_entries := data_fsys.Readdir("/systems")
 
-	system_entries := data_fsys.ReadDir("/systems")
-
-	fmt.Println(system_entries)
+	// fmt.Println(system_entries)
 
 	http.Handle("/", fsrv)
 
-	http.Handle("/api/systems", func(response http.ResponseWriter, request *http.Request) {
+	http.HandleFunc("/api/systems", func(response http.ResponseWriter, request *http.Request) {
 
 		if request.Method == http.MethodGet {
 
@@ -48,7 +47,7 @@ func main() {
 
 		} else {
 
-			response.Header.Set("Content-Type", "application/json")
+			response.Header().Set("Content-Type", "application/json")
 			response.WriteHeader(http.StatusMethodNotAllowed)
 			response.Write([]byte("[]"))
 

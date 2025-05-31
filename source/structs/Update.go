@@ -1,7 +1,6 @@
 package structs
 
 import "battlemap/types"
-import utils_encoding "battlemap/utils/encoding"
 import "net/url"
 import "strings"
 

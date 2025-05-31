@@ -1,7 +1,7 @@
 package types
 
 import "strings"
-import utils_strings "tholian-endpoint/utils/strings"
+import utils_strings "battlemap/utils/strings"
 
 func formatIPv6(value string) string {
 

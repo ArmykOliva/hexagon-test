@@ -1,7 +1,5 @@
 package types
 
-import "tholian-endpoint/console"
-import "strconv"
 import "strings"
 
 type Group struct {
@@ -29,18 +27,6 @@ func ToGroup(name string) Group {
 	group.SetType("user")
 
 	return group
-
-}
-
-func (group *Group) Debug() {
-
-	if group.Name != "" {
-
-		if group.ID == 0 && group.Name != "root" {
-			console.Warn("groups/" + group.Name + ": Invalid ID " + strconv.FormatUint(uint64(group.ID), 10))
-		}
-
-	}
 
 }
 

@@ -1,6 +1,6 @@
 package matchers
 
-import "tholian-endpoint/types"
+import "battlemap/types"
 import "encoding/binary"
 import "encoding/hex"
 import "hash/crc32"
