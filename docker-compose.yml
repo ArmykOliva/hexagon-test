@@ -1,0 +1,30 @@
+version: '3.8'
+
+services:
+  hexagon-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      - ENV=production
+    restart: unless-stopped
+    
+  # Development service with volume mounts for live reload
+  hexagon-dev:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: builder
+    ports:
+      - "3001:3000"
+    volumes:
+      - ./source:/app/source
+      - ./libraries:/app/libraries
+    working_dir: /app/source
+    command: bash -c "chmod +x build.sh && ./build.sh"
+    environment:
+      - ENV=development
+    profiles:
+      - dev 
