@@ -1,0 +1,26 @@
+# Git files
+.git
+.gitignore
+
+# Documentation
+README.md
+*.md
+
+# IDE files
+.vscode
+.idea
+*.swp
+*.swo
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Build artifacts (will be created in container)
+source/public/main.wasm
+source/public/wasm_exec.js
+
+# Docker files
+Dockerfile
+docker-compose.yml
+.dockerignore 
