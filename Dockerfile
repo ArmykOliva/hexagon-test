@@ -10,6 +10,8 @@ WORKDIR /app
 # Copy libraries first
 COPY libraries/ ./libraries/
 
+COPY data/ ./data/
+
 # Copy source directory
 COPY source/ ./source/
 

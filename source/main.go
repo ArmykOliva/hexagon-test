@@ -4,7 +4,10 @@ import "github.com/cookiengineer/gooey/bindings/animations"
 import "github.com/cookiengineer/gooey/bindings/canvas2d"
 import "github.com/cookiengineer/gooey/bindings/console"
 import "github.com/cookiengineer/gooey/bindings/dom"
+import "github.com/cookiengineer/gooey/bindings/fetch"
 import "battlemap/hexgrid"
+import "battlemap/structs"
+import "encoding/json"
 import "time"
 
 func main() {
@@ -13,18 +16,48 @@ func main() {
 	canvas  := canvas2d.ToCanvas(element)
 
 	hexagons := []hexgrid.Hexagon{
-		hexgrid.NewHexagon( 0,  0,  0),
-		hexgrid.NewHexagon( 1, -1,  0),
-		hexgrid.NewHexagon(-1,  1,  0),
-		hexgrid.NewHexagon( 0,  1, -1),
-		hexgrid.NewHexagon( 0, -1,  1),
-		hexgrid.NewHexagon( 1,  0, -1),
-		hexgrid.NewHexagon(-1,  0,  1),
 	}
 	grid := hexgrid.NewMap(1024, 640, 64)
 
 	for _, hexagon := range hexagons {
 		grid.Add(&hexagon)
+	}
+
+
+	// TODO Kristof fix this shit
+
+	response, err := fetch.Fetch("http://localhost:3000/api/systems", &fetch.Request{
+		Method: fetch.MethodGet,
+		Mode:   fetch.ModeSameOrigin,
+	})
+
+	if err == nil {
+
+		var system_names []string
+
+		json.Unmarshal(response.Body, &system_names)
+
+		for i, name := range system_names {
+
+			hexagon := hexgrid.NewHexagon(i, 0, 0)
+			grid.Add(&hexagon)
+
+			response2, err2 := fetch.Fetch("http://localhost:3000/api/systems/" + name, &fetch.Request{
+				Method: fetch.MethodGet,
+				Mode:   fetch.ModeSameOrigin,
+			})
+
+			if err2 == nil {
+
+				var system structs.System
+
+				json.Unmarshal(response2.Body, &system)
+
+				console.Log(system)
+
+			}
+
+		}
 	}
 
 	renderer := hexgrid.NewRenderer(canvas, &grid)
