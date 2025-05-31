@@ -141,7 +141,26 @@
         "packages": []
       }
     ],
-    "vulnerabilities": [],
+    "vulnerabilities": [
+      {
+        "name": "CVE-2024-2071",
+        "description": "CVE-2024-2071",
+        "type": "CVE",
+        "severity": "high",
+        "state": "active",
+        "references": [
+          "https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2024-2071"
+        ],
+        "datetime": "2024-05-01 13:27:30",
+        "connections": [],
+        "devices": [],
+        "distributions": [],
+        "packages": [],
+        "products": [],
+        "programs": [],
+        "weaknesses": []
+      }
+    ],
     "antiques": [],
     "updates": null,
     "users": [
