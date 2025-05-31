@@ -1,7 +1,10 @@
 package hexgrid
 
+import "github.com/cookiengineer/gooey/bindings/canvas2d"
+
 type Hexagon struct {
 	Position *HexPosition `json:"position"`
+	RenderFunc func(*canvas2d.Context, *Map) // Optional custom render function
 }
 
 func NewHexagon(q int, r int, s int) Hexagon {

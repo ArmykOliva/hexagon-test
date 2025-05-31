@@ -16,21 +16,12 @@ func main() {
 	canvas  := canvas2d.ToCanvas(element)
 
 	hexagons := []hexgrid.Hexagon{
-		hexgrid.NewHexagon( 0,  0,  0),
-		hexgrid.NewHexagon( 1, -1,  0),
-		hexgrid.NewHexagon(-1,  1,  0),
-		hexgrid.NewHexagon( 0,  1, -1),
-		hexgrid.NewHexagon( 0, -1,  1),
-		hexgrid.NewHexagon( 1,  0, -1),
-		hexgrid.NewHexagon(-1,  0,  1),
 	}
 	grid := hexgrid.NewMap(1024, 640, 64)
 
 	for _, hexagon := range hexagons {
 		grid.Add(&hexagon)
 	}
-
-	renderer := hexgrid.NewRenderer(canvas, &grid)
 
 
 	// TODO Kristof fix this shit
@@ -46,7 +37,7 @@ func main() {
 
 		json.Unmarshal(response.Body, &system_names)
 
-		for _, name := range system_names {
+		for i, name := range system_names {
 
 			response2, err2 := fetch.Fetch("http://localhost:3000/api/systems/" + name, &fetch.Request{
 				Method: fetch.MethodGet,
@@ -61,11 +52,15 @@ func main() {
 
 				console.Log(system)
 
+				systemHex := hexgrid.NewSystemHexagon(&system, i, 0, 0)
+				grid.Add(&systemHex.Hexagon)  // Add the base Hexagon part to the grid
+
 			}
 
 		}
-
 	}
+
+	renderer := hexgrid.NewRenderer(canvas, &grid)
 
 	animations.RequestAnimationFrame(func(timestamp float64) {
 
