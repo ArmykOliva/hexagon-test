@@ -32,25 +32,45 @@ func NewRenderer(canvas *canvas2d.Canvas, themap *Map) Renderer {
 func (renderer *Renderer) Render() {
 
 	renderer.Map.Each(func(hexagon *Hexagon) {
+		if hexagon.RenderFunc != nil {
+			// Use custom render function
+			hexagon.RenderFunc(renderer.Context, renderer.Map)
+		} else {
+			// Use default rendering (existing code)
+			context := renderer.Context
+			polygon := renderer.Map.ToScreenPolygon(*hexagon.Position)
 
-		context := renderer.Context
-		polygon := renderer.Map.ToScreenPolygon(*hexagon.Position)
+			if renderer.Active != nil {
 
-		if renderer.Active != nil {
+				if renderer.Active.IsEqual(*hexagon) {
 
-			if renderer.Active.IsEqual(*hexagon) {
+					context.BeginPath()
+					context.SetFillStyleColor(renderer.Palette.Active)
+					context.MoveTo(polygon[0].X, polygon[0].Y)
+					context.LineTo(polygon[1].X, polygon[1].Y)
+					context.LineTo(polygon[2].X, polygon[2].Y)
+					context.LineTo(polygon[3].X, polygon[3].Y)
+					context.LineTo(polygon[4].X, polygon[4].Y)
+					context.LineTo(polygon[5].X, polygon[5].Y)
+					context.LineTo(polygon[0].X, polygon[0].Y)
+					context.Fill()
+					context.ClosePath()
 
-				context.BeginPath()
-				context.SetFillStyleColor(renderer.Palette.Active)
-				context.MoveTo(polygon[0].X, polygon[0].Y)
-				context.LineTo(polygon[1].X, polygon[1].Y)
-				context.LineTo(polygon[2].X, polygon[2].Y)
-				context.LineTo(polygon[3].X, polygon[3].Y)
-				context.LineTo(polygon[4].X, polygon[4].Y)
-				context.LineTo(polygon[5].X, polygon[5].Y)
-				context.LineTo(polygon[0].X, polygon[0].Y)
-				context.Fill()
-				context.ClosePath()
+				} else {
+
+					context.BeginPath()
+					context.SetStrokeStyleColor(renderer.Palette.Default)
+					context.MoveTo(polygon[0].X, polygon[0].Y)
+					context.LineTo(polygon[1].X, polygon[1].Y)
+					context.LineTo(polygon[2].X, polygon[2].Y)
+					context.LineTo(polygon[3].X, polygon[3].Y)
+					context.LineTo(polygon[4].X, polygon[4].Y)
+					context.LineTo(polygon[5].X, polygon[5].Y)
+					context.LineTo(polygon[0].X, polygon[0].Y)
+					context.Stroke()
+					context.ClosePath()
+
+				}
 
 			} else {
 
@@ -68,25 +88,9 @@ func (renderer *Renderer) Render() {
 
 			}
 
-		} else {
-
-			context.BeginPath()
-			context.SetStrokeStyleColor(renderer.Palette.Default)
-			context.MoveTo(polygon[0].X, polygon[0].Y)
-			context.LineTo(polygon[1].X, polygon[1].Y)
-			context.LineTo(polygon[2].X, polygon[2].Y)
-			context.LineTo(polygon[3].X, polygon[3].Y)
-			context.LineTo(polygon[4].X, polygon[4].Y)
-			context.LineTo(polygon[5].X, polygon[5].Y)
-			context.LineTo(polygon[0].X, polygon[0].Y)
-			context.Stroke()
-			context.ClosePath()
-
+			console.Log(hexagon)
+			console.Log(polygon)
 		}
-
-		console.Log(hexagon)
-		console.Log(polygon)
-
 	})
 
 }

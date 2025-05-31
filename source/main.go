@@ -39,9 +39,6 @@ func main() {
 
 		for i, name := range system_names {
 
-			hexagon := hexgrid.NewHexagon(i, 0, 0)
-			grid.Add(&hexagon)
-
 			response2, err2 := fetch.Fetch("http://localhost:3000/api/systems/" + name, &fetch.Request{
 				Method: fetch.MethodGet,
 				Mode:   fetch.ModeSameOrigin,
@@ -54,6 +51,9 @@ func main() {
 				json.Unmarshal(response2.Body, &system)
 
 				console.Log(system)
+
+				systemHex := hexgrid.NewSystemHexagon(&system, i, 0, 0)
+				grid.Add(&systemHex.Hexagon)  // Add the base Hexagon part to the grid
 
 			}
 
