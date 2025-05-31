@@ -1,8 +1,7 @@
 package structs
 
-import "tholian-endpoint/console"
-import "tholian-endpoint/types"
-import utils_encoding "tholian-endpoint/utils/encoding"
+import "battlemap/types"
+import utils_encoding "battlemap/utils/encoding"
 import "net/url"
 import "strings"
 
@@ -22,33 +21,6 @@ func NewUpdate(manager string) Update {
 	update.SetManager(manager)
 
 	return update
-
-}
-
-func (update *Update) Debug() {
-
-	if update.Name != "" {
-
-		if update.Version.IsValid() == false {
-			console.Error("updates/" + update.Name + ": Invalid Version")
-			console.Error(utils_encoding.ToJSON(update.Version))
-		}
-
-		if update.Architecture.IsValid() == false {
-			console.Error("updates/" + update.Name + ": Invalid Architecture")
-			console.Error(utils_encoding.ToJSON(update.Architecture))
-		}
-
-		if update.Manager.IsValid() == false {
-			console.Error("updates/" + update.Name + ": Invalid Manager")
-			console.Error(utils_encoding.ToJSON(update.Manager))
-		}
-
-		if update.URL == "" {
-			console.Error("updates/" + update.Name + ": Invalid URL")
-		}
-
-	}
 
 }
 

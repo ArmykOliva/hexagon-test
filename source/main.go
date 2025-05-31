@@ -4,7 +4,7 @@ import "github.com/cookiengineer/gooey/bindings/animations"
 import "github.com/cookiengineer/gooey/bindings/canvas2d"
 import "github.com/cookiengineer/gooey/bindings/console"
 import "github.com/cookiengineer/gooey/bindings/dom"
-import "example/hexgrid"
+import "battlemap/hexgrid"
 import "time"
 
 func main() {

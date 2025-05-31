@@ -1,7 +1,7 @@
 package structs
 
-import "tholian-endpoint/matchers"
-import "tholian-endpoint/types"
+import "battlemap/matchers"
+import "battlemap/types"
 import "time"
 
 type Incident struct {

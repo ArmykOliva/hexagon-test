@@ -1,8 +1,7 @@
 package structs
 
-import "tholian-endpoint/console"
-import "tholian-endpoint/types"
-import utils_encoding "tholian-endpoint/utils/encoding"
+import "battlemap/types"
+import utils_encoding "battlemap/utils/encoding"
 import "net/url"
 import "strings"
 
@@ -24,37 +23,6 @@ func NewAntique(manager string, service string) Antique {
 	antique.SetService(service)
 
 	return antique
-
-}
-
-func (antique *Antique) Debug() {
-
-	if antique.Name != "" {
-
-		if antique.Version.IsValid() == false {
-			console.Error("antiques/" + antique.Name + ": Invalid Version")
-			console.Error(utils_encoding.ToJSON(antique.Version))
-		}
-
-		if antique.Architecture.IsValid() == false {
-			console.Error("antiques/" + antique.Name + ": Invalid Architecture")
-			console.Error(utils_encoding.ToJSON(antique.Architecture))
-		}
-
-		if antique.Manager.IsValid() == false {
-			console.Error("antiques/" + antique.Name + ": Invalid Manager")
-			console.Error(utils_encoding.ToJSON(antique.Manager))
-		}
-
-		if antique.Service == "" {
-			console.Error("antiques/" + antique.Name + ": Invalid Service")
-		}
-
-		if antique.URL == "" {
-			console.Error("antiques/" + antique.Name + ": Invalid URL")
-		}
-
-	}
 
 }
 

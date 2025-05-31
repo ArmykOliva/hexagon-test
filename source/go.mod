@@ -1,4 +1,4 @@
-module example
+module battlemap
 
 go 1.23.5
 

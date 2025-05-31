@@ -1,6 +1,6 @@
 package structs
 
-import utils_strings "tholian-endpoint/utils/strings"
+import utils_strings "battlemap/utils/strings"
 import "strings"
 
 type Mitigation struct {

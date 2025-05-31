@@ -1,9 +1,8 @@
 package structs
 
-import "tholian-endpoint/console"
-import "tholian-endpoint/matchers"
-import utils_path "tholian-endpoint/utils/path"
-import utils_encoding "tholian-endpoint/utils/encoding"
+import "battlemap/matchers"
+import utils_path "battlemap/utils/path"
+import utils_encoding "battlemap/utils/encoding"
 import "strings"
 
 type Program struct {
@@ -35,103 +34,6 @@ func NewProgram(pid uint, name string) Program {
 	program.Packages = make([]Package, 0)
 
 	return program
-
-}
-
-func (program *Program) Debug() {
-
-	if program.Name != "" {
-
-		if program.PID == 0 {
-			console.Error("programs/" + program.Name + ": Invalid PID")
-		}
-
-		if strings.HasPrefix(program.Command, "/") == false {
-			console.Error("programs/" + program.Name + ": Invalid Command \"" + program.Command + "\"")
-		}
-
-		if strings.HasPrefix(program.Folder, "/") == false {
-			console.Error("programs/" + program.Name + ": Invalid Folder \"" + program.Folder + "\"")
-		}
-
-		if len(program.Environment) > 0 {
-
-			for key, val := range program.Environment {
-
-				if len(val) == 0 {
-					console.Error("programs/" + program.Name + ": Invalid Environment key value for \"" + key + "\"")
-				}
-
-			}
-
-		}
-
-		if program.User.IsValid() == false {
-			console.Error("programs/" + program.Name + ": Invalid User")
-			console.Error(utils_encoding.ToJSON(program.User))
-		}
-
-		if program.Manager.IsValid() == false {
-			console.Error("programs/" + program.Name + ": Invalid Manager")
-			console.Error(utils_encoding.ToJSON(program.Manager))
-		}
-
-		if len(program.Filesystem) > 0 {
-
-			for f := 0; f < len(program.Filesystem); f++ {
-
-				file := program.Filesystem[f]
-
-				if utils_path.IsWatchedFile(file) == false {
-					console.Error("programs/" + program.Name + ": Invalid File \"" + file + "\"")
-				}
-
-			}
-
-		}
-
-		for c := 0; c < len(program.Connections); c++ {
-
-			connection := program.Connections[c]
-
-			if connection.IsValid() == false {
-				console.Error("programs/" + program.Name + ": Invalid Connection")
-				console.Error(utils_encoding.ToJSON(connection))
-			}
-
-		}
-
-		if len(program.Dependencies) > 0 {
-
-			for d := 0; d < len(program.Dependencies); d++ {
-
-				dependency := program.Dependencies[d]
-
-				if dependency.IsValid() == false {
-					console.Error("programs/" + program.Name + ": Invalid Dependency \"" + dependency.Name + "\"")
-					console.Error(utils_encoding.ToJSON(dependency))
-				}
-
-			}
-
-		}
-
-		if len(program.Packages) > 0 {
-
-			for p := 0; p < len(program.Packages); p++ {
-
-				pkg := program.Packages[p]
-
-				if pkg.IsValid() == false {
-					console.Error("programs/" + program.Name + ": Invalid Package \"" + pkg.Name + "\"")
-					console.Error(utils_encoding.ToJSON(pkg))
-				}
-
-			}
-
-		}
-
-	}
 
 }
 

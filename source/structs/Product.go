@@ -1,7 +1,6 @@
 package structs
 
-import "tholian-endpoint/console"
-import utils_strings "tholian-endpoint/utils/strings"
+import utils_strings "battlemap/utils/strings"
 import "strings"
 
 func parseCPEValue(value string) string {
@@ -198,30 +197,6 @@ func ToProduct(value string) Product {
 	}
 
 	return product
-
-}
-
-func (product *Product) Debug() {
-
-	if product.Name != "" {
-
-		if product.Version == "" {
-			console.Error("products/" + product.Name + ": Invalid Version")
-		}
-
-		if product.Type != "product" {
-			console.Error("products/" + product.Name + ": Invalid Type")
-		}
-
-		if product.Vendor == "" {
-			console.Error("products/" + product.Name + ": Invalid Vendor")
-		}
-
-		if product.Type == "" {
-			console.Error("products/" + product.Name + ": Invalid Type")
-		}
-
-	}
 
 }
 

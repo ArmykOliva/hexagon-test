@@ -1,10 +1,9 @@
 package structs
 
-import "tholian-endpoint/console"
-import "tholian-endpoint/matchers"
-import "tholian-endpoint/types"
-import utils_path "tholian-endpoint/utils/path"
-import utils_encoding "tholian-endpoint/utils/encoding"
+import "battlemap/matchers"
+import "battlemap/types"
+import utils_path "battlemap/utils/path"
+import utils_encoding "battlemap/utils/encoding"
 import "net/url"
 import "strings"
 
@@ -41,99 +40,6 @@ func NewPackage(manager string) Package {
 	pkg.Unresolved = make([]matchers.Unresolved, 0)
 
 	return pkg
-
-}
-
-func (pkg *Package) Debug() {
-
-	if pkg.Name != "" {
-
-		if pkg.Version.IsValid() == false {
-			console.Error("packages/" + pkg.Name + ": Invalid Version")
-			console.Error(utils_encoding.ToJSON(pkg.Version))
-		}
-
-		if pkg.Architecture.IsValid() == false {
-			console.Error("packages/" + pkg.Name + ": Invalid Architecture")
-			console.Error(utils_encoding.ToJSON(pkg.Architecture))
-		}
-
-		if pkg.Datetime.IsValid() == false {
-			console.Error("packages/" + pkg.Name + ": Invalid Datetime")
-			console.Error(utils_encoding.ToJSON(pkg.Datetime))
-		}
-
-		if pkg.Manager.IsValid() == false {
-			console.Error("packages/" + pkg.Name + ": Invalid Manager")
-			console.Error(utils_encoding.ToJSON(pkg.Manager))
-		}
-
-		for m := 0; m < len(pkg.Maintainers); m++ {
-
-			maintainer := pkg.Maintainers[m]
-
-			if maintainer.IsValid() == false {
-				console.Error("packages/" + pkg.Name + ": Invalid Maintainer")
-				console.Error(utils_encoding.ToJSON(maintainer))
-			}
-
-		}
-
-		for f := 0; f < len(pkg.Filesystem); f++ {
-
-			file := pkg.Filesystem[f]
-
-			if utils_path.IsWatchedFile(file) == false {
-				console.Error("packages/" + pkg.Name + ": Invalid File \"" + file + "\"")
-			}
-
-		}
-
-		for c := 0; c < len(pkg.Conflicts); c++ {
-
-			dependency := pkg.Conflicts[c]
-
-			if dependency.IsValid() == false {
-				console.Error("packages/" + pkg.Name + ": Invalid Conflicts")
-				console.Error(utils_encoding.ToJSON(dependency))
-			}
-
-		}
-
-		for d := 0; d < len(pkg.Dependencies); d++ {
-
-			dependency := pkg.Dependencies[d]
-
-			if dependency.IsValid() == false {
-				console.Error("packages/" + pkg.Name + ": Invalid Dependency")
-				console.Error(utils_encoding.ToJSON(dependency))
-			}
-
-		}
-
-		for p := 0; p < len(pkg.Provides); p++ {
-
-			dependency := pkg.Provides[p]
-
-			if dependency.IsValid() == false {
-				console.Error("packages/" + pkg.Name + ": Invalid Provides")
-				console.Error(utils_encoding.ToJSON(dependency))
-			}
-
-		}
-
-		for r := 0; r < len(pkg.Replaces); r++ {
-
-			dependency := pkg.Replaces[r]
-
-			if dependency.IsValid() == false {
-				console.Error("packages/" + pkg.Name + ": Invalid Replaces")
-				console.Error(utils_encoding.ToJSON(dependency))
-			}
-
-		}
-
-	}
 
 }
 

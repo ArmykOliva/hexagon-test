@@ -1,6 +1,6 @@
 package structs
 
-import "tholian-endpoint/types"
+import "battlemap/types"
 import "encoding/hex"
 import "strconv"
 import "strings"
