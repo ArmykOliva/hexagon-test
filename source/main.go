@@ -4,7 +4,10 @@ import "github.com/cookiengineer/gooey/bindings/animations"
 import "github.com/cookiengineer/gooey/bindings/canvas2d"
 import "github.com/cookiengineer/gooey/bindings/console"
 import "github.com/cookiengineer/gooey/bindings/dom"
+import "github.com/cookiengineer/gooey/bindings/fetch"
 import "battlemap/hexgrid"
+import "battlemap/structs"
+import "encoding/json"
 import "time"
 
 func main() {
@@ -28,6 +31,41 @@ func main() {
 	}
 
 	renderer := hexgrid.NewRenderer(canvas, &grid)
+
+
+	// TODO Kristof fix this shit
+
+	response, err := fetch.Fetch("http://localhost:3000/api/systems", &fetch.Request{
+		Method: fetch.MethodGet,
+		Mode:   fetch.ModeSameOrigin,
+	})
+
+	if err == nil {
+
+		var system_names []string
+
+		json.Unmarshal(response.Body, &system_names)
+
+		for _, name := range system_names {
+
+			response2, err2 := fetch.Fetch("http://localhost:3000/api/systems/" + name, &fetch.Request{
+				Method: fetch.MethodGet,
+				Mode:   fetch.ModeSameOrigin,
+			})
+
+			if err2 == nil {
+
+				var system structs.System
+
+				json.Unmarshal(response2.Body, &system)
+
+				console.Log(system)
+
+			}
+
+		}
+
+	}
 
 	animations.RequestAnimationFrame(func(timestamp float64) {
 
