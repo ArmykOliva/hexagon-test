@@ -1,56 +1,78 @@
 {
-	"name": "6e5b93f546924feha5fd07c681b92f80",
-	"hostname": "router",
+	"name": "6e5b93f546924feca5fd07c681b92f80",
+	"hostname": "openwrt-router",
 	"datetime": "2025-05-31 12:21:45",
 	"distribution": {
-		"name": "",
-		"version": "any",
-		"kernel": "",
-		"kernel_architecture": "",
+		"name": "OpenWrt",
+		"version": "23.05.2",
+		"kernel": "Linux",
+		"kernel_architecture": "mips_24kc",
 		"kernel_modules": [
+			"ath9k",
+			"usbcore",
+			"nf_conntrack",
+			"leds_gpio",
+			"gpio_button_hotplug",
+			"ip_tables",
+			"iptable_nat",
+			"nf_nat"
 		],
-		"kernel_version": "",
-		"manager": "",
-		"vendor": ""
+		"kernel_version": "5.15.137",
+		"manager": "opkg",
+		"vendor": "OpenWrt Project"
 	},
 	"fingerprint": {
 		"country": "NL",
-		"locale": "en_US",
+		"locale": "en_US.UTF-8",
 		"timezone": "Europe/Amsterdam",
 		"token": ""
 	},
 	"bios": {
-		"name": "",
-		"bus": "",
+		"name": "U-Boot",
+		"bus": "platform",
 		"system": {
-			"device": "",
-			"vendor": "",
-			"name": ""
+			"device": "Bootloader",
+			"vendor": "Das U-Boot",
+			"name": "U-Boot 2022.01"
 		},
 		"subsystem": null
 	},
 	"board": {
-		"name": "",
-		"bus": "",
+		"name": "Qualcomm Atheros AP135 Reference Board",
+		"bus": "platform",
 		"system": {
-			"device": "",
-			"vendor": "",
-			"name": ""
+			"device": "Single Board Computer",
+			"vendor": "Qualcomm Atheros",
+			"name": "AP135"
 		},
 		"subsystem": {
-			"device": "",
-			"vendor": "",
-			"name": ""
+			"device": "System-on-Chip",
+			"vendor": "Qualcomm Atheros",
+			"name": "QCA9533 rev 1"
 		}
 	},
 	"devices": [
 		{
-			"name": "",
-			"bus": "",
+			"name": "eth0",
+			"bus": "platform",
 			"system": {
+				"device": "Ethernet Controller",
+				"vendor": "Qualcomm Atheros",
+				"name": "QCA9533 built-in Giga Switch"
+			},
+			"subsystem": {
 				"device": "",
 				"vendor": "",
 				"name": ""
+			}
+		},
+		{
+			"name": "radio0",
+			"bus": "ahb",
+			"system": {
+				"device": "Wireless Network Adapter",
+				"vendor": "Qualcomm Atheros",
+				"name": "QCA9533 802.11bgn"
 			},
 			"subsystem": {
 				"device": "",
@@ -59,33 +81,52 @@
 			}
 		}
 	],
-	"drives": null,
+	"drives": [
+		{
+			"name": "/dev/mtdblock5",
+			"type": "FLASH_PARTITION",
+			"model": "rootfs",
+			"vendor": "N/A",
+			"mountpoint": "/",
+			"filesystem": "squashfs",
+			"size_bytes": 12582912
+		},
+		{
+			"name": "/dev/mtdblock6",
+			"type": "FLASH_PARTITION",
+			"model": "rootfs_data",
+			"vendor": "N/A",
+			"mountpoint": "/overlay",
+			"filesystem": "jffs2",
+			"size_bytes": 2097152
+		}
+	],
 	"incidents": null,
 	"mitigations": [],
 	"networks": [
 		{
-			"name": "",
+			"name": "br-lan",
 			"subnets": [
 				{
-					"name": "",
+					"name": "LAN",
 					"country": "",
-					"address": "",
-					"scope": "",
+					"address": "192.168.1.1",
+					"scope": "private",
 					"type": "ipv4",
-					"prefix": 8
+					"prefix": 24
 				}
 			]
 		},
 		{
-			"name": "wlp3s0",
+			"name": "eth0.2",
 			"subnets": [
 				{
-					"name": "",
+					"name": "WAN",
 					"country": "",
-					"address": "100.81.73.74",
+					"address": "84.33.11.10",
 					"scope": "public",
 					"type": "ipv4",
-					"prefix": 14
+					"prefix": 22
 				}
 			]
 		}
@@ -93,44 +134,104 @@
 	"packages": [
 		{
 			"name": "db5.3",
-			"version": "0:5.3.28~5",
-			"architecture": "x86_64",
-			"manager": "pacman",
-			"vendor": "",
-			"url": "https://www.oracle.com/technology/software/products/berkeley-db/index.html",
-			"datetime": "2024-05-01 13:27:30",
+			"version": "0:5.3.28-1",
+			"architecture": "mips_24kc",
+			"manager": "opkg",
+			"vendor": "OpenWrt community",
+			"url": "https://downloads.openwrt.org/releases/23.05.2/packages/mips_24kc/packages/",
+			"datetime": "2023-10-15 18:30:00",
 			"maintainers": [
-				"Frederik Schwan \u003cfreswa@archlinux.org\u003e"
+				"OpenWrt developers <openwrt-devel@lists.openwrt.org>"
 			],
 			"filesystem": [
-				"/usr/lib/db5.3/libdb.so",
-				"/usr/lib/db5.3/libdb_cxx.so",
-				"/usr/lib/db5.3/libdb_stl.so",
-				"/usr/lib/libdb-5.3.so",
-				"/usr/lib/libdb-5.so",
-				"/usr/lib/libdb_cxx-5.3.so",
-				"/usr/lib/libdb_cxx-5.so",
-				"/usr/lib/libdb_stl-5.3.so",
-				"/usr/lib/libdb_stl-5.so"
+				"/usr/lib/libdb-5.3.so"
 			],
 			"conflicts": [],
 			"dependencies": [
 				{
-					"name": "gcc-libs",
+					"name": "libc",
 					"version": "any",
 					"architecture": "any",
-					"manager": "pacman",
-					"vendor": "any"
-				},
-				{
-					"name": "sh",
-					"version": "any",
-					"architecture": "any",
-					"manager": "pacman",
+					"manager": "opkg",
 					"vendor": "any"
 				}
 			],
 			"provides": [],
+			"replaces": [],
+			"unresolved": []
+		},
+		{
+			"name": "dropbear",
+			"version": "2022.82-2",
+			"architecture": "mips_24kc",
+			"manager": "opkg",
+			"vendor": "OpenWrt Project",
+			"url": "https://matt.ucc.asn.au/dropbear/dropbear.html",
+			"datetime": "2023-03-20 10:00:00",
+			"maintainers": ["Matt Johnston"],
+			"filesystem": ["/usr/sbin/dropbear", "/etc/config/dropbear"],
+			"dependencies": [{"name": "libc", "version": "any", "architecture": "any", "manager": "opkg", "vendor": "any"}, {"name": "libutil", "version": "any", "architecture": "any", "manager": "opkg", "vendor": "any"}],
+			"provides": ["sshd"],
+			"replaces": [],
+			"unresolved": []
+		},
+		{
+			"name": "dnsmasq-full",
+			"version": "2.89-4",
+			"architecture": "mips_24kc",
+			"manager": "opkg",
+			"vendor": "OpenWrt Project",
+			"url": "http://www.thekelleys.org.uk/dnsmasq/doc.html",
+			"datetime": "2023-08-10 14:00:00",
+			"maintainers": ["Simon Kelley"],
+			"filesystem": ["/usr/sbin/dnsmasq", "/etc/config/dhcp"],
+			"dependencies": [{"name": "libc", "version": "any", "architecture": "any", "manager": "opkg", "vendor": "any"}, {"name": "libubus", "version": "any", "architecture": "any", "manager": "opkg", "vendor": "any"}],
+			"provides": ["dnsmasq"],
+			"replaces": ["dnsmasq-basic"],
+			"unresolved": []
+		},
+		{
+			"name": "uhttpd",
+			"version": "2023-06-25-38c085fc-1",
+			"architecture": "mips_24kc",
+			"manager": "opkg",
+			"vendor": "OpenWrt Project",
+			"url": "https://git.openwrt.org/project/uhttpd.git",
+			"datetime": "2023-06-26 12:00:00",
+			"maintainers": ["Felix Fietkau"],
+			"filesystem": ["/usr/sbin/uhttpd", "/etc/config/uhttpd"],
+			"dependencies": [{"name": "libc", "version": "any", "architecture": "any", "manager": "opkg", "vendor": "any"}, {"name": "libubus", "version": "any", "architecture": "any", "manager": "opkg", "vendor": "any"}, {"name": "libuhttpd-lua", "version": "any", "architecture": "any", "manager": "opkg", "vendor": "any"}],
+			"provides": [],
+			"replaces": [],
+			"unresolved": []
+		},
+		{
+			"name": "luci-base",
+			"version": "git-23.093.57104-ce20b4a",
+			"architecture": "all",
+			"manager": "opkg",
+			"vendor": "OpenWrt Project",
+			"url": "https://git.openwrt.org/project/luci.git",
+			"datetime": "2023-04-03 16:00:00",
+			"maintainers": ["LuCI Development Team"],
+			"filesystem": ["/usr/lib/lua/luci/", "/www/luci-static/"],
+			"dependencies": [{"name": "lua", "version": "any", "architecture": "any", "manager": "opkg", "vendor": "any"}, {"name": "uci", "version": "any", "architecture": "any", "manager": "opkg", "vendor": "any"}, {"name": "libiwinfo-lua", "version": "any", "architecture": "any", "manager": "opkg", "vendor": "any"}],
+			"provides": [],
+			"replaces": [],
+			"unresolved": []
+		},
+		{
+			"name": "kernel",
+			"version": "5.15.137-1-183353a020f7902f50679479f0035639",
+			"architecture": "mips_24kc",
+			"manager": "opkg",
+			"vendor": "OpenWrt",
+			"url": "https://git.openwrt.org/?p=openwrt/openwrt.git;a=summary",
+			"datetime": "2023-10-25 10:00:00",
+			"maintainers": ["OpenWrt Build System"],
+			"filesystem": ["/boot/vmlinuz-5.15.137", "/lib/modules/5.15.137/"],
+			"dependencies": [],
+			"provides": ["linux-kernel"],
 			"replaces": [],
 			"unresolved": []
 		}
@@ -138,85 +239,120 @@
 	"responses": [],
 	"services": [
 		{
-			"pid": 5398,
-			"name": "serve",
-			"command": "/home/cookiengineer/.cache/go-build/78/78b6c552ecfda7d277869b6ee9680a4117b34a6aae7731cc825fd6ef3972e26c-d/serve",
+			"pid": 631,
+			"name": "dropbear",
+			"command": "/usr/sbin/dropbear",
 			"arguments": [
-				"/home/cookiengineer/.cache/go-build/78/78b6c552ecfda7d277869b6ee9680a4117b34a6aae7731cc825fd6ef3972e26c-d/serve"
+				"/usr/sbin/dropbear",
+				"-F",
+				"-P",
+				"/var/run/dropbear.pid",
+				"-p",
+				"192.168.1.1:22"
 			],
-			"folder": "/home/cookiengineer/Software/cookiengineer/hexagontest_prototype/source",
+			"folder": "/",
 			"environment": {
-				"ANDROID_HOME": "/home/cookiengineer/.local/share/android",
-				"BROWSER": "/usr/bin/chromium",
-				"COLORTERM": "truecolor",
-				"DBUS_SESSION_BUS_ADDRESS": "unix:path=/run/user/1000/bus",
-				"DEBUGINFOD_URLS": "https://debuginfod.archlinux.org",
-				"DESKTOP_STARTUP_ID": "i3/kitty/669-0-thinky_TIME24260",
-				"DISPLAY": ":0",
-				"EDITOR": "/usr/bin/vim",
-				"GNUPG_HOME": "/home/cookiengineer/.local/share/gnupg",
-				"GTK3_MODULES": "xapp-gtk3-module",
-				"GTK_MODULES": "canberra-gtk-module",
-				"HISTFILE": "/home/cookiengineer/.local/state/bash/history",
-				"HOME": "/home/cookiengineer",
-				"I3SOCK": "/run/user/1000/i3/ipc-socket.669",
-				"INVOCATION_ID": "02edcec21a0f4ad3b971353112330619",
-				"KITTY_INSTALLATION_DIR": "/usr/lib/kitty",
-				"KITTY_PID": "840",
-				"KITTY_PUBLIC_KEY": "1:wbGJ1f`8^oBcmArZtxysWKES@DlYf_LoG7\u003c\u0026rY@{",
-				"KITTY_WINDOW_ID": "1",
-				"LANG": "en_US.UTF-8",
-				"LESSHISTFILE": "/home/cookiengineer/.local/state/less/history",
-				"LOGNAME": "cookiengineer",
-				"MAIL": "/var/spool/mail/cookiengineer",
-				"MEMORY_PRESSURE_WATCH": "/sys/fs/cgroup/system.slice/ly.service/memory.pressure",
-				"MEMORY_PRESSURE_WRITE": "c29tZSAyMDAwMDAgMjAwMDAwMAA=",
-				"MOTD_SHOWN": "pam",
-				"NPM_CONFIG_USERCONFIG": "/home/cookiengineer/.config/npm/npmrc",
-				"OLDPWD": "/home/cookiengineer/Software/cookiengineer/hexagontest",
-				"PATH": "/usr/lib/go/bin:/home/cookiengineer/go/bin:/home/cookiengineer/.cargo/bin:/sbin:/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/usr/bin/site_perl:/usr/bin/vendor_perl:/usr/bin/core_perl",
-				"PWD": "/home/cookiengineer/Software/cookiengineer/hexagontest/source",
-				"SHELL": "/usr/bin/bash",
-				"SHLVL": "2",
-				"SYSTEMD_EXEC_PID": "637",
-				"TERM": "xterm-kitty",
-				"TERMINFO": "/usr/lib/kitty/terminfo",
-				"USER": "cookiengineer",
-				"WINDOWID": "20971534",
-				"XAUTHORITY": "/run/user/1000/lyxauth",
-				"XDG_CACHE_HOME": "/home/cookiengineer/.cache",
-				"XDG_CONFIG_HOME": "/home/cookiengineer/.config",
-				"XDG_CURRENT_DESKTOP": "i3",
-				"XDG_DATA_HOME": "/home/cookiengineer/.local/share",
-				"XDG_RUNTIME_DIR": "/run/user/1000",
-				"XDG_SEAT": "seat0",
-				"XDG_SESSION_CLASS": "user",
-				"XDG_SESSION_DESKTOP": "i3",
-				"XDG_SESSION_ID": "1",
-				"XDG_SESSION_TYPE": "x11",
-				"XDG_STATE_HOME": "/home/cookiengineer/.local/state",
-				"XDG_VTNR": "2",
-				"_": "/sbin/go",
-				"_JAVA_OPTIONS": "-Djava.util.prefs.userRoot=\"/home/cookiengineer/.config\"/java"
+				"PATH": "/usr/sbin:/usr/bin:/sbin:/bin"
 			},
 			"user": {
-				"name": "cookiengineer",
-				"password": "any",
+				"name": "root",
+				"password": "x",
 				"type": "user"
 			},
 			"manager": {
-				"name": ""
+				"name": "procd"
 			},
 			"filesystem": [
-				"/usr/lib/libc.so.6",
-				"/usr/lib/libresolv.so.2",
-				"/usr/lib/ld-linux-x86-64.so.2"
+				"/lib/ld-musl-mips_24kc.so.1",
+				"/usr/lib/libutil.so.1",
+				"/usr/lib/libcrypt.so.1",
+				"/lib/libc.so",
+				"/etc/dropbear/dropbear_rsa_host_key"
 			],
 			"connections": [
 				{
 					"socket": {
-						"host": "0000:0000:0000:0000:0000:0000:0000:0000",
-						"port": 3000
+						"host": "192.168.1.1",
+						"port": 22
+					},
+					"protocol": "tcp",
+					"type": "server"
+				},
+				{
+					"source": {"host": "192.168.1.1", "port": 22}, "target": {"host": "192.168.1.10", "port": 45872}, "protocol": "tcp", "type": "established", "scope": "private"
+				},
+				{
+					"source": {"host": "192.168.1.1", "port": 22}, "target": {"host": "192.168.1.11", "port": 45998}, "protocol": "tcp", "type": "established", "scope": "private"
+				},
+				{
+					"source": {"host": "192.168.1.1", "port": 22}, "target": {"host": "192.168.1.12", "port": 46012}, "protocol": "tcp", "type": "established", "scope": "private"
+				},
+				{
+					"source": {"host": "192.168.1.1", "port": 22}, "target": {"host": "192.168.1.13", "port": 46150}, "protocol": "tcp", "type": "established", "scope": "private"
+				},
+				{
+					"source": {"host": "192.168.1.1", "port": 22}, "target": {"host": "192.168.1.14", "port": 46222}, "protocol": "tcp", "type": "established", "scope": "private"
+				},
+				{
+					"source": {"host": "192.168.1.1", "port": 22}, "target": {"host": "192.168.1.15", "port": 46348}, "protocol": "tcp", "type": "established", "scope": "private"
+				},
+				{
+					"source": {"host": "192.168.1.1", "port": 22}, "target": {"host": "192.168.1.16", "port": 46400}, "protocol": "tcp", "type": "established", "scope": "private"
+				},
+				{
+					"source": {"host": "192.168.1.1", "port": 22}, "target": {"host": "192.168.1.17", "port": 46512}, "protocol": "tcp", "type": "established", "scope": "private"
+				},
+				{
+					"source": {"host": "192.168.1.1", "port": 22}, "target": {"host": "192.168.1.18", "port": 46555}, "protocol": "tcp", "type": "established", "scope": "private"
+				}
+			],
+			"dependencies": [],
+			"packages": []
+		},
+		{
+			"pid": 782,
+			"name": "uhttpd",
+			"command": "/usr/sbin/uhttpd",
+			"arguments": [
+				"/usr/sbin/uhttpd",
+				"-f",
+				"-h",
+				"/www",
+				"-r",
+				"OpenWrt",
+				"-x",
+				"/cgi-bin",
+				"-t",
+				"60",
+				"-T",
+				"30",
+				"-p",
+				"0.0.0.0:80"
+			],
+			"folder": "/www",
+			"environment": {
+				"PATH": "/usr/sbin:/usr/bin:/sbin:/bin"
+			},
+			"user": {
+				"name": "http",
+				"password": "x",
+				"type": "user"
+			},
+			"manager": {
+				"name": "procd"
+			},
+			"filesystem": [
+				"/lib/ld-musl-mips_24kc.so.1",
+				"/usr/lib/libuhttpd.so",
+				"/usr/lib/liblua5.1.so.5.1",
+				"/lib/libc.so",
+				"/etc/config/uhttpd"
+			],
+			"connections": [
+				{
+					"socket": {
+						"host": "0.0.0.0",
+						"port": 80
 					},
 					"protocol": "tcp",
 					"type": "server"
@@ -226,40 +362,45 @@
 			"packages": []
 		},
 		{
-			"pid": 631,
-			"name": "sshd",
-			"command": "/usr/bin/sshd",
+			"pid": 715,
+			"name": "dnsmasq",
+			"command": "/usr/sbin/dnsmasq",
 			"arguments": [
-				"sshd: /usr/bin/sshd -D [listener] 0 of 10-100 startups"
+				"/usr/sbin/dnsmasq",
+				"-C",
+				"/var/etc/dnsmasq.conf.cfg01411c",
+				"-k",
+				"-x",
+				"/var/run/dnsmasq/dnsmasq.cfg01411c.pid"
 			],
 			"folder": "/",
-			"environment": {},
+			"environment": {
+				"PATH": "/usr/sbin:/usr/bin:/sbin:/bin"
+			},
 			"user": {
-				"name": "root",
-				"password": "any",
+				"name": "dnsmasq",
+				"password": "x",
 				"type": "user"
 			},
 			"manager": {
-				"name": ""
+				"name": "procd"
 			},
 			"filesystem": [
-				"/usr/lib/libc.so.6",
-				"/usr/lib/libcrypto.so.3",
-				"/usr/lib/ld-linux-x86-64.so.2"
+				"/lib/ld-musl-mips_24kc.so.1",
+				"/usr/lib/libnetfilter_conntrack.so.3",
+				"/usr/lib/libmnl.so.0",
+				"/lib/libc.so",
+				"/etc/config/dhcp"
 			],
 			"connections": [
 				{
-					"source": {
-						"host": "192.168.1.1",
-						"port": 22
-					},
-					"scope": "private",
-					"target": {
-						"host": "192.168.1.2",
-						"port": 22
-					},
-					"protocol": "tcp",
-					"type": "server"
+					"socket": {"host": "0.0.0.0", "port": 53}, "protocol": "udp", "type": "server"
+				},
+				{
+					"socket": {"host": "0.0.0.0", "port": 53}, "protocol": "tcp", "type": "server"
+				},
+				{
+					"socket": {"host": "0.0.0.0", "port": 67}, "protocol": "udp", "type": "server"
 				}
 			],
 			"dependencies": [],
@@ -268,43 +409,158 @@
 	],
 	"vulnerabilities": [
 		{
-			"name": "CVE-2024-2071",
-			"description": "CVE-2024-2071",
+			"name": "CVE-2023-28463",
+			"description": "A heap-based buffer overflow vulnerability in the DHCPv6 advertise functionality of dnsmasq versions before 2.90 could allow an attacker to cause a denial of service or achieve remote code execution.",
+			"type": "CVE",
+			"severity": "critical",
+			"state": "active",
+			"references": [
+				"https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2023-28463",
+				"https://www.jsof-tech.com/disclosures/dnspooq/"
+			],
+			"datetime": "2023-03-20 00:00:00",
+			"connections": [],
+			"devices": [],
+			"distributions": [],
+			"packages": [
+				{
+					"name": "dnsmasq-full",
+					"version": "2.89-4",
+					"architecture": "mips_24kc",
+					"manager": "opkg",
+					"vendor": "OpenWrt Project"
+				}
+			],
+			"products": [],
+			"programs": [],
+			"weaknesses": ["CWE-122"]
+		},
+		{
+			"name": "CVE-2020-7982",
+			"description": "An XSS issue in LuCI in OpenWrt through 19.07.1 allows unauthenticated attackers to inject arbitrary web script or HTML via the language parameter of the login page.",
+			"type": "CVE",
+			"severity": "medium",
+			"state": "active",
+			"references": [
+				"https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2020-7982"
+			],
+			"datetime": "2020-01-23 00:00:00",
+			"connections": [],
+			"devices": [],
+			"distributions": [],
+			"packages": [
+				{
+					"name": "luci-base",
+					"version": "git-23.093.57104-ce20b4a",  // Assuming this version is still affected or representative
+					"architecture": "all",
+					"manager": "opkg",
+					"vendor": "OpenWrt Project"
+				}
+			],
+			"products": [],
+			"programs": [],
+			"weaknesses": ["CWE-79"]
+		},
+		{
+			"name": "CVE-2022-0847",
+			"description": "A flaw in the way the Linux kernel's new pipe buffer structure was initialized (Dirty Pipe) could allow an unprivileged local user to overwrite data in arbitrary read-only files. This could be used to escalate privileges on the system. Affects Linux kernel versions from 5.8 up to, but not including, 5.16.11, 5.15.25, and 5.10.102.",
 			"type": "CVE",
 			"severity": "high",
 			"state": "active",
 			"references": [
-				"https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2024-2071"
+				"https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2022-0847",
+				"https://dirtypipe.cm4all.com/"
 			],
-			"datetime": "2024-05-01 13:27:30",
-			// just keep these
+			"datetime": "2022-03-07 00:00:00",
 			"connections": [],
 			"devices": [],
-			"distributions": [],
-			"packages": [],
+			"distributions": [
+				{
+					"name": "OpenWrt",
+					"version": "23.05.2",
+					"kernel_version": "5.15.137" // Vulnerable as it's before 5.15.25 (if unpatched by vendor)
+				}
+			],
+			"packages": [
+			    {
+					"name": "kernel",
+					"version": "5.15.137-1-183353a020f7902f50679479f0035639",
+					"architecture": "mips_24kc",
+					"manager": "opkg",
+					"vendor": "OpenWrt"
+				}
+			],
 			"products": [],
 			"programs": [],
-			"weaknesses": []
+			"weaknesses": ["CWE-284", "CWE-269"]
 		}
 	],
 	"antiques": [],
 	"updates": null,
 	"users": [
 		{
-			"id": 973,
-			"name": "alpm",
-			"password": "!*",
+			"id": 0,
+			"name": "root",
+			"password": "x",
+			"folder": "/root",
+			"groups": [
+				{
+					"id": 0,
+					"name": "root",
+					"password": "x",
+					"type": "system"
+				}
+			],
+			"shell": "/bin/ash",
+			"type": "administrator"
+		},
+		{
+			"id": 65534,
+			"name": "nobody",
+			"password": "*",
 			"folder": "/",
 			"groups": [
 				{
-					"id": 973,
-					"name": "alpm",
-					"password": "",
-					"type": "user"
+					"id": 65534,
+					"name": "nogroup",
+					"password": "x",
+					"type": "system"
 				}
 			],
-			"shell": "/usr/bin/nologin",
-			"type": "program"
+			"shell": "/bin/false",
+			"type": "system"
+		},
+		{
+			"id": 101,
+			"name": "network",
+			"password": "*",
+			"folder": "/var/run/network",
+			"groups": [
+				{
+					"id": 101,
+					"name": "network",
+					"password": "x",
+					"type": "system"
+				}
+			],
+			"shell": "/bin/false",
+			"type": "system"
+		},
+		{
+			"id": 102,
+			"name": "dnsmasq",
+			"password": "*",
+			"folder": "/var/lib/dnsmasq",
+			"groups": [
+				{
+					"id": 102,
+					"name": "dnsmasq",
+					"password": "x",
+					"type": "system"
+				}
+			],
+			"shell": "/bin/false",
+			"type": "system"
 		}
 	]
 }
