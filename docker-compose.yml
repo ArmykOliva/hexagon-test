@@ -10,21 +10,21 @@ services:
     environment:
       - ENV=production
     restart: unless-stopped
-    
-  # Development service with volume mounts for live reload
-  hexagon-dev:
+
+  frontend:
     build:
-      context: .
+      context: ./frontend
       dockerfile: Dockerfile
-      target: builder
     ports:
-      - "3001:3000"
+      - "5173:5173"
     volumes:
-      - ./source:/app/source
-      - ./libraries:/app/libraries
-    working_dir: /app/source
-    command: bash -c "chmod +x build.sh && ./build.sh"
+      - ./frontend/src:/usr/src/app/src
+      - ./frontend/static:/usr/src/app/static
+      - ./frontend/vite.config.ts:/usr/src/app/vite.config.ts
+      - ./frontend/svelte.config.js:/usr/src/app/svelte.config.js
+      - ./frontend/tsconfig.json:/usr/src/app/tsconfig.json
     environment:
-      - ENV=development
-    profiles:
-      - dev 
+      - CHOKIDAR_USEPOLLING=true
+    stdin_open: true # Equivalent to -i in docker run
+    tty: true        # Equivalent to -t in docker run
+  
