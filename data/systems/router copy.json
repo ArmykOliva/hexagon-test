@@ -1,0 +1,310 @@
+{
+	"name": "6e5b93f546924feca5fd07c681b92f80",
+	"hostname": "router",
+	"datetime": "2025-05-31 12:21:45",
+	"distribution": {
+		"name": "",
+		"version": "any",
+		"kernel": "",
+		"kernel_architecture": "",
+		"kernel_modules": [
+		],
+		"kernel_version": "",
+		"manager": "",
+		"vendor": ""
+	},
+	"fingerprint": {
+		"country": "NL",
+		"locale": "en_US",
+		"timezone": "Europe/Amsterdam",
+		"token": ""
+	},
+	"bios": {
+		"name": "",
+		"bus": "",
+		"system": {
+			"device": "",
+			"vendor": "",
+			"name": ""
+		},
+		"subsystem": null
+	},
+	"board": {
+		"name": "",
+		"bus": "",
+		"system": {
+			"device": "",
+			"vendor": "",
+			"name": ""
+		},
+		"subsystem": {
+			"device": "",
+			"vendor": "",
+			"name": ""
+		}
+	},
+	"devices": [
+		{
+			"name": "",
+			"bus": "",
+			"system": {
+				"device": "",
+				"vendor": "",
+				"name": ""
+			},
+			"subsystem": {
+				"device": "",
+				"vendor": "",
+				"name": ""
+			}
+		}
+	],
+	"drives": null,
+	"incidents": null,
+	"mitigations": [],
+	"networks": [
+		{
+			"name": "",
+			"subnets": [
+				{
+					"name": "",
+					"country": "",
+					"address": "",
+					"scope": "",
+					"type": "ipv4",
+					"prefix": 8
+				}
+			]
+		},
+		{
+			"name": "wlp3s0",
+			"subnets": [
+				{
+					"name": "",
+					"country": "",
+					"address": "100.81.73.74",
+					"scope": "public",
+					"type": "ipv4",
+					"prefix": 14
+				}
+			]
+		}
+	],
+	"packages": [
+		{
+			"name": "db5.3",
+			"version": "0:5.3.28~5",
+			"architecture": "x86_64",
+			"manager": "pacman",
+			"vendor": "",
+			"url": "https://www.oracle.com/technology/software/products/berkeley-db/index.html",
+			"datetime": "2024-05-01 13:27:30",
+			"maintainers": [
+				"Frederik Schwan \u003cfreswa@archlinux.org\u003e"
+			],
+			"filesystem": [
+				"/usr/lib/db5.3/libdb.so",
+				"/usr/lib/db5.3/libdb_cxx.so",
+				"/usr/lib/db5.3/libdb_stl.so",
+				"/usr/lib/libdb-5.3.so",
+				"/usr/lib/libdb-5.so",
+				"/usr/lib/libdb_cxx-5.3.so",
+				"/usr/lib/libdb_cxx-5.so",
+				"/usr/lib/libdb_stl-5.3.so",
+				"/usr/lib/libdb_stl-5.so"
+			],
+			"conflicts": [],
+			"dependencies": [
+				{
+					"name": "gcc-libs",
+					"version": "any",
+					"architecture": "any",
+					"manager": "pacman",
+					"vendor": "any"
+				},
+				{
+					"name": "sh",
+					"version": "any",
+					"architecture": "any",
+					"manager": "pacman",
+					"vendor": "any"
+				}
+			],
+			"provides": [],
+			"replaces": [],
+			"unresolved": []
+		}
+	],
+	"responses": [],
+	"services": [
+		{
+			"pid": 5398,
+			"name": "serve",
+			"command": "/home/cookiengineer/.cache/go-build/78/78b6c552ecfda7d277869b6ee9680a4117b34a6aae7731cc825fd6ef3972e26c-d/serve",
+			"arguments": [
+				"/home/cookiengineer/.cache/go-build/78/78b6c552ecfda7d277869b6ee9680a4117b34a6aae7731cc825fd6ef3972e26c-d/serve"
+			],
+			"folder": "/home/cookiengineer/Software/cookiengineer/hexagontest_prototype/source",
+			"environment": {
+				"ANDROID_HOME": "/home/cookiengineer/.local/share/android",
+				"BROWSER": "/usr/bin/chromium",
+				"COLORTERM": "truecolor",
+				"DBUS_SESSION_BUS_ADDRESS": "unix:path=/run/user/1000/bus",
+				"DEBUGINFOD_URLS": "https://debuginfod.archlinux.org",
+				"DESKTOP_STARTUP_ID": "i3/kitty/669-0-thinky_TIME24260",
+				"DISPLAY": ":0",
+				"EDITOR": "/usr/bin/vim",
+				"GNUPG_HOME": "/home/cookiengineer/.local/share/gnupg",
+				"GTK3_MODULES": "xapp-gtk3-module",
+				"GTK_MODULES": "canberra-gtk-module",
+				"HISTFILE": "/home/cookiengineer/.local/state/bash/history",
+				"HOME": "/home/cookiengineer",
+				"I3SOCK": "/run/user/1000/i3/ipc-socket.669",
+				"INVOCATION_ID": "02edcec21a0f4ad3b971353112330619",
+				"KITTY_INSTALLATION_DIR": "/usr/lib/kitty",
+				"KITTY_PID": "840",
+				"KITTY_PUBLIC_KEY": "1:wbGJ1f`8^oBcmArZtxysWKES@DlYf_LoG7\u003c\u0026rY@{",
+				"KITTY_WINDOW_ID": "1",
+				"LANG": "en_US.UTF-8",
+				"LESSHISTFILE": "/home/cookiengineer/.local/state/less/history",
+				"LOGNAME": "cookiengineer",
+				"MAIL": "/var/spool/mail/cookiengineer",
+				"MEMORY_PRESSURE_WATCH": "/sys/fs/cgroup/system.slice/ly.service/memory.pressure",
+				"MEMORY_PRESSURE_WRITE": "c29tZSAyMDAwMDAgMjAwMDAwMAA=",
+				"MOTD_SHOWN": "pam",
+				"NPM_CONFIG_USERCONFIG": "/home/cookiengineer/.config/npm/npmrc",
+				"OLDPWD": "/home/cookiengineer/Software/cookiengineer/hexagontest",
+				"PATH": "/usr/lib/go/bin:/home/cookiengineer/go/bin:/home/cookiengineer/.cargo/bin:/sbin:/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/usr/bin/site_perl:/usr/bin/vendor_perl:/usr/bin/core_perl",
+				"PWD": "/home/cookiengineer/Software/cookiengineer/hexagontest/source",
+				"SHELL": "/usr/bin/bash",
+				"SHLVL": "2",
+				"SYSTEMD_EXEC_PID": "637",
+				"TERM": "xterm-kitty",
+				"TERMINFO": "/usr/lib/kitty/terminfo",
+				"USER": "cookiengineer",
+				"WINDOWID": "20971534",
+				"XAUTHORITY": "/run/user/1000/lyxauth",
+				"XDG_CACHE_HOME": "/home/cookiengineer/.cache",
+				"XDG_CONFIG_HOME": "/home/cookiengineer/.config",
+				"XDG_CURRENT_DESKTOP": "i3",
+				"XDG_DATA_HOME": "/home/cookiengineer/.local/share",
+				"XDG_RUNTIME_DIR": "/run/user/1000",
+				"XDG_SEAT": "seat0",
+				"XDG_SESSION_CLASS": "user",
+				"XDG_SESSION_DESKTOP": "i3",
+				"XDG_SESSION_ID": "1",
+				"XDG_SESSION_TYPE": "x11",
+				"XDG_STATE_HOME": "/home/cookiengineer/.local/state",
+				"XDG_VTNR": "2",
+				"_": "/sbin/go",
+				"_JAVA_OPTIONS": "-Djava.util.prefs.userRoot=\"/home/cookiengineer/.config\"/java"
+			},
+			"user": {
+				"name": "cookiengineer",
+				"password": "any",
+				"type": "user"
+			},
+			"manager": {
+				"name": ""
+			},
+			"filesystem": [
+				"/usr/lib/libc.so.6",
+				"/usr/lib/libresolv.so.2",
+				"/usr/lib/ld-linux-x86-64.so.2"
+			],
+			"connections": [
+				{
+					"socket": {
+						"host": "0000:0000:0000:0000:0000:0000:0000:0000",
+						"port": 3000
+					},
+					"protocol": "tcp",
+					"type": "server"
+				}
+			],
+			"dependencies": [],
+			"packages": []
+		},
+		{
+			"pid": 631,
+			"name": "sshd",
+			"command": "/usr/bin/sshd",
+			"arguments": [
+				"sshd: /usr/bin/sshd -D [listener] 0 of 10-100 startups"
+			],
+			"folder": "/",
+			"environment": {},
+			"user": {
+				"name": "root",
+				"password": "any",
+				"type": "user"
+			},
+			"manager": {
+				"name": ""
+			},
+			"filesystem": [
+				"/usr/lib/libc.so.6",
+				"/usr/lib/libcrypto.so.3",
+				"/usr/lib/ld-linux-x86-64.so.2"
+			],
+			"connections": [
+				{
+					"source": {
+						"host": "192.168.1.1",
+						"port": 22
+					},
+					"scope": "private",
+					"target": {
+						"host": "192.168.1.2",
+						"port": 22
+					},
+					"protocol": "tcp",
+					"type": "server"
+				}
+			],
+			"dependencies": [],
+			"packages": []
+		}
+	],
+	"vulnerabilities": [
+		{
+			"name": "CVE-2024-2071",
+			"description": "CVE-2024-2071",
+			"type": "CVE",
+			"severity": "high",
+			"state": "active",
+			"references": [
+				"https://cve.mitre.org/cgi-bin/cvename.cgi?name=CVE-2024-2071"
+			],
+			"datetime": "2024-05-01 13:27:30",
+			// just keep these
+			"connections": [],
+			"devices": [],
+			"distributions": [],
+			"packages": [],
+			"products": [],
+			"programs": [],
+			"weaknesses": []
+		}
+	],
+	"antiques": [],
+	"updates": null,
+	"users": [
+		{
+			"id": 973,
+			"name": "alpm",
+			"password": "!*",
+			"folder": "/",
+			"groups": [
+				{
+					"id": 973,
+					"name": "alpm",
+					"password": "",
+					"type": "user"
+				}
+			],
+			"shell": "/usr/bin/nologin",
+			"type": "program"
+		}
+	]
+}

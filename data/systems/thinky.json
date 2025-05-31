@@ -48836,7 +48836,20 @@
 				"/usr/lib64/ld-linux-x86-64.so.2",
 				"/usr/lib/libcap.so.2"
 			],
-			"connections": [],
+			"connections": [
+			{
+			"source": { "host": "6e5b93f546924feca5fd07c681b92f80", "port": 54321 },
+			"target": { "host": "3971b52ceebf43e7b960010b2f976e30", "port": 80 },
+			"protocol": "tcp",
+			"type": "established"
+			},
+			{
+			"source": { "host": "6e5b93f546924feca5fd07c681b92f80", "port": 12345 },
+			"target": { "host": "another_system_id", "port": 443 },
+			"protocol": "tcp",
+			"type": "established"
+			}
+		],
 			"dependencies": [
 				{
 					"name": "systemd-libs",

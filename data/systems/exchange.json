@@ -1,0 +1,173 @@
+{
+  "name": "b7d21aa098aa42ceaa1d01f6ee0000ef",
+  "hostname": "win-exchange",
+  "datetime": "2025-05-31 18:20:00",
+  "distribution": {
+    "name": "Windows Server",
+    "version": "2013",
+    "kernel": "Windows NT",
+    "kernel_architecture": "x86_64",
+    "kernel_modules": [],
+    "kernel_version": "6.3.9600",
+    "manager": "Windows Update",
+    "vendor": "Microsoft"
+  },
+  "fingerprint": {
+    "country": "NL",
+    "locale": "en_US",
+    "timezone": "Europe/Amsterdam",
+    "token": ""
+  },
+  "bios": {
+    "name": "American Megatrends Inc.",
+    "bus": "bios",
+    "system": {
+      "device": "server",
+      "vendor": "Dell Inc.",
+      "name": "PowerEdge T130"
+    },
+    "subsystem": null
+  },
+  "board": {
+    "name": "PowerEdge",
+    "bus": "pci",
+    "system": {
+      "device": "mainboard",
+      "vendor": "Dell",
+      "name": "0T30F2"
+    },
+    "subsystem": {
+      "device": "chipset",
+      "vendor": "Intel",
+      "name": "C236 Chipset"
+    }
+  },
+  "devices": [],
+  "drives": [
+    {
+      "name": "C:",
+      "size_gb": 512,
+      "filesystem": "NTFS",
+      "mounted": true
+    }
+  ],
+  "incidents": null,
+  "mitigations": [],
+  "networks": [
+    {
+      "name": "Ethernet0",
+      "subnets": [
+        {
+          "name": "LAN",
+          "country": "NL",
+          "address": "192.168.1.150",
+          "scope": "private",
+          "type": "ipv4",
+          "prefix": 24
+        }
+      ]
+    }
+  ],
+  "packages": [
+    {
+      "name": "Microsoft Exchange Server",
+      "version": "2016 CU18",
+      "architecture": "x86_64",
+      "manager": "manual",
+      "vendor": "Microsoft",
+      "url": "https://www.microsoft.com/exchange",
+      "datetime": "2023-08-15 15:00:00",
+      "maintainers": ["Microsoft Exchange Team"],
+      "filesystem": [
+        "C:\\Program Files\\Microsoft\\Exchange Server\\V15\\bin\\Microsoft.Exchange.Store.Worker.exe",
+        "C:\\Program Files\\Microsoft\\Exchange Server\\V15\\bin\\Microsoft.Exchange.Server.dll"
+      ],
+      "conflicts": [],
+      "dependencies": [],
+      "provides": [],
+      "replaces": [],
+      "unresolved": []
+    }
+  ],
+  "responses": [],
+  "services": [
+    {
+      "pid": 4021,
+      "name": "MSExchangeFrontEndHttpProxy",
+      "command": "C:\\Program Files\\Microsoft\\Exchange Server\\V15\\Bin\\Microsoft.Exchange.FrontEndHttpProxy.exe",
+      "arguments": [],
+      "folder": "C:\\Program Files\\Microsoft\\Exchange Server\\V15\\Bin",
+      "environment": {},
+      "user": {
+        "name": "NT AUTHORITY\\NetworkService",
+        "password": "any",
+        "type": "system"
+      },
+      "manager": {
+        "name": "SCM"
+      },
+      "filesystem": [
+        "C:\\Windows\\System32\\ntdll.dll",
+        "C:\\Windows\\System32\\kernel32.dll"
+      ],
+      "connections": [
+        {
+          "source": {
+            "host": "192.168.1.150",
+            "port": 443
+          },
+          "target": {
+            "host": "192.168.1.1",
+            "port": 22
+          },
+          "scope": "private",
+          "protocol": "tcp",
+          "type": "client"
+        }
+      ],
+      "dependencies": [],
+      "packages": []
+    }
+  ],
+  "vulnerabilities": [
+    {
+      "name": "CVE-2021-34473",
+      "description": "Microsoft Exchange Server Remote Code Execution via ProxyShell.",
+      "type": "CVE",
+      "severity": "critical",
+      "state": "active",
+      "references": [
+        "https://nvd.nist.gov/vuln/detail/CVE-2021-34473",
+        "https://msrc.microsoft.com/update-guide/vulnerability/CVE-2021-34473"
+      ],
+      "datetime": "2024-01-01 00:00:00",
+      "connections": [],
+      "devices": [],
+      "distributions": [],
+      "packages": [],
+      "products": [],
+      "programs": [],
+      "weaknesses": []
+    }
+  ],
+  "antiques": [],
+  "updates": null,
+  "users": [
+    {
+      "id": 500,
+      "name": "Administrator",
+      "password": "any",
+      "folder": "C:\\Users\\Administrator",
+      "groups": [
+        {
+          "id": 500,
+          "name": "Administrators",
+          "password": "",
+          "type": "user"
+        }
+      ],
+      "shell": "powershell.exe",
+      "type": "user"
+    }
+  ]
+}

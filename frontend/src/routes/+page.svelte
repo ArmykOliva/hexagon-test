@@ -3,168 +3,31 @@
 	import Panzoom from 'panzoom'; // Import Panzoom
 	import type { PanzoomObject } from 'panzoom'; // Import PanzoomObject type
 	import Hexagon from '../lib/components/Hexagon.svelte'; // Import Hexagon component
+	import type { 
+		System, 
+		// Service, // Service is used within System, direct import not strictly needed here if only selectedSystem.services is used
+		// NetworkInterface, // Same, used within System
+		// Ensure all types used directly in the template or script logic (not just nested in System) are imported.
+		SystemToSystemConnection, // Import for use in template
+		SystemConnectionSocket, // Ensure these are imported for mock data
+		User, UserGroup // Import for use in template
+	} from '../lib/types'; // Updated import path
 
-	// Define interfaces based on the provided JSON structure (assuming these are still valid)
-	export interface Subnet {
-		name: string;
-		country: string;
-		address: string;
-		scope: string;
-		type: string; // 'ipv4' | 'ipv6'
-		prefix: number;
-	}
+	// --- TypeScript Interfaces are now in ../lib/types.ts ---
 
-	export interface NetworkInterface {
-		name: string;
-		subnets: Subnet[];
-		// Older fields like mac, ip4, ip6 might be part of a more detailed view or sub-object if available
-		// For now, focusing on the provided 'subnets' structure
-		mac?: string; // Optional, if still relevant from older data or if it can be derived
-		ip4?: string[]; // Optional
-		ip6?: string[]; // Optional
-	}
-
-	export interface Distribution {
-		name: string;
-		version: string;
-		kernel: string;
-		kernel_architecture?: string;
-		kernel_modules?: string[];
-		kernel_version?: string;
-		manager?: string;
-		vendor?: string;
-	}
-
-	export interface Fingerprint {
-		country: string;
-		locale: string;
-		timezone: string;
-		token?: string;
-	}
-
-	export interface BiosInfo {
-		name: string;
-		bus: string;
-		system: any; // Can be more specific if structure is known
-		subsystem: any; // Can be more specific
-	}
-
-	export interface BoardInfo {
-		name: string;
-		bus: string;
-		system: any;
-		subsystem: any;
-	}
-
-	export interface DeviceSystemInfo {
-		device: string;
-		vendor: string;
-		name: string;
-	}
-	
-	export interface Device {
-		name: string;
-		bus: string;
-		system: DeviceSystemInfo;
-		subsystem?: DeviceSystemInfo | null;
-	}
-	
-	// Assuming 'services' if not null, would be an array of objects with at least a name
-	// This is a placeholder; update when actual service object structure is known
-	export interface Service {
-		pid: number;
-		name: string;
-		command: string;
-		arguments: string[];
-		folder: string;
-		environment: Record<string, string>;
-		user: ServiceUser; // Define ServiceUser
-		manager: ServiceManager; // Define ServiceManager
-		filesystem: string[];
-		connections: ServiceConnection[]; // Define ServiceConnection
-		dependencies: any[]; // Can be more specific if structure known
-		packages: any[]; // Can be more specific if structure known
-	}
-
-	export interface ServiceUser {
-		name: string;
-		password?: string; // Or just type: string if always present
-		type: string;
-	}
-
-	export interface ServiceManager {
-		name: string;
-	}
-
-	export interface SocketInfo {
-		host: string;
-		port: number;
-	}
-
-	export interface ServiceConnection {
-		socket: SocketInfo;
-		protocol: string; // e.g., "tcp"
-		type: string; // e.g., "server"
-	}
-
-	// For the 'packages' field (if it's ever populated with old structure)
-	// and for the 'updates' field
-	export interface PackageInfo { // Renamed from Package to avoid conflict if structure differs
-		name: string;
-		version: string;
-		architecture: string;
-		manager: string;
-		vendor?: string; // Was in old 'Package', might be in 'updates' items
-		url: string;
-		datetime?: string; // Was in old 'Package'
-		maintainers?: string[]; // Was in old 'Package'
-		filesystem?: string[]; // Was in old 'Package'
-		conflicts?: string[]; // Was in old 'Package'
-		dependencies?: any[]; // Was in old 'Package', use 'any' or define PackageDependency
-		provides?: string[]; // Was in old 'Package'
-		replaces?: string[]; // Was in old 'Package'
-		unresolved?: string[]; // Was in old 'Package'
-	}
-	
-	export interface UserGroup {
-		id: number;
-		name: string;
-		password?: string;
-		type?: string;
-	}
-
-	export interface User {
-		id: number;
-		name: string;
-		password?: string;
-		folder?: string;
-		groups?: UserGroup[];
-		shell?: string;
-		type?: string; // 'user' | 'program'
-	}
-
-	export interface System {
-		id: string; // Kept from previous logic, maps to top-level 'name' in new JSON
-		name: string; // This is the ID like "3971b52c..."
-		hostname: string;
-		datetime: string;
-		distribution: Distribution;
-		fingerprint: Fingerprint;
-		bios: BiosInfo | null;
-		board: BoardInfo | null;
-		devices: Device[] | null;
-		drives: any | null; // Define if structure known
-		incidents: any | null; // Define if structure known
-		mitigations: any[] | null;
-		networks: NetworkInterface[]; // Was NetworkInterface[] | null
-		packages: PackageInfo[] | null; // For the 'packages' field, if used
-		programs: any | null; // Define if structure known
-		responses?: any[]; // Optional
-		services: Service[] | null;
-		antiques?: any[]; // Optional
-		updates: PackageInfo[] | null; // For the 'updates' array
-		users?: User[] | null;
-	}
+	// --- Mocked System-to-System Connections ---
+	// Using the IDs you provided for OlivaSurface and thinky
+	const MOCKED_CONNECTIONS_CONFIG: Array<{sourceId: string, targetId: string, protocol?: string, type?: string, sourcePort?: number, targetPort?: number}> = [
+		{
+			sourceId: "3971b52ceebf43e7b960010b2f976e30", // Assuming this is OlivaSurface ID
+			targetId: "6e5b93f546924feca5fd07c681b92f80", // Assuming this is Thinky ID
+			protocol: "tcp", 
+			type: "simulated-link",
+			sourcePort: 80, // Example port
+			targetPort: 54321 // Example port
+		}
+		// Add more mock connections here if needed
+	];
 
 	let systems: System[] = [];
 	let selectedSystem: System | null = null;
@@ -174,6 +37,9 @@
 	let panzoomInstance: PanzoomObject | null = null;
 	let mapContainerElement: HTMLElement;
 	let svgElement: SVGElement;
+
+	// Store hexagon positions for drawing lines
+	let hexagonPositions: Record<string, { x: number; y: number; q: number; r: number }> = {};
 
 	// Make hexagons larger and adjust padding
 	const hexSize = 160; // Increased from 120
@@ -198,22 +64,143 @@
 					console.error(`Failed to fetch data for system ${id}: ${sysResponse.statusText} (${sysResponse.status})`);
 					return null;
 				}
-				// The raw data from API
 				const systemDataFromApi = await sysResponse.json();
-				// Adapt to our System interface, especially mapping top-level 'name' to 'id' for consistency
-				// and ensuring all fields match the new System interface.
-				const adaptedSystem: System = {
-					...systemDataFromApi, // Spread all fields from API
-					id: systemDataFromApi.name, // map the unique name (like "3971b52c...") to 'id'
-					// Ensure nested structures like 'networks' also conform if necessary
-					// Example: if networks didn't have subnets directly but needed transformation
+				const baseSystem: System = {
+					...systemDataFromApi,
+					id: systemDataFromApi.name, 
+					connections: systemDataFromApi.connections || [] // Ensure connections array exists
 				};
-				return adaptedSystem;
+				return baseSystem;
 			});
 
-			const resolvedSystems = await Promise.all(systemPromises);
-			systems = resolvedSystems.filter(s => s !== null) as System[];
+			let resolvedSystems = (await Promise.all(systemPromises)).filter(s => s !== null) as System[];
+
+			// Augment systems with mocked connections for sidebar display and layout hinting
+			resolvedSystems = resolvedSystems.map(sys => {
+				const outgoingMockConnections: SystemToSystemConnection[] = [];
+				MOCKED_CONNECTIONS_CONFIG.forEach(mockConf => {
+					if (mockConf.sourceId === sys.id) {
+						outgoingMockConnections.push({
+							source: { host: mockConf.sourceId, port: mockConf.sourcePort || 0 },
+							target: { host: mockConf.targetId, port: mockConf.targetPort || 0 },
+							protocol: mockConf.protocol || "unknown",
+							type: mockConf.type || "mocked"
+						});
+					}
+					// Also add reverse connection if you want two-way visibility from one-way config
+					// For simplicity, current mock config is one-way from sourceId
+				});
+				return {
+					...sys,
+					connections: [...(sys.connections || []), ...outgoingMockConnections]
+				};
+			});
+
+			systems = resolvedSystems;
 			error = null;
+
+			// --- Connection-Aware Hexagon Layout (Revised) --- 
+			const newHexagonPositions: Record<string, { x: number; y: number; q: number; r: number }> = {};
+			const occupiedAxialCoords: Set<string> = new Set(); // "q,r"
+			
+			function axialToPixel(q: number, r: number): { x: number; y: number } {
+				// For pointy-topped hexagons, a common conversion:
+				// x = hex_radius * (sqrt(3) * q + sqrt(3)/2 * r)
+				// y = hex_radius * (3/2 * r)
+				// Using our hexSize (diameter) and padding:
+				const x = (hexWidth + paddingX) * q + (hexWidth + paddingX) / 2 * r; // Adjusted for axial coordinates
+        		const y = (hexHeight * 0.75 + paddingY) * r;
+				return { x: x + hexWidth / 2, y: y + hexHeight / 2 }; 
+			}
+
+			// Directions for axial coordinates (pointy-topped)
+			const axialDirections = [
+				{q: +1, r:  0}, {q: +1, r: -1}, {q:  0, r: -1}, 
+    			{q: -1, r:  0}, {q: -1, r: +1}, {q:  0, r: +1}
+			];
+
+			const systemsToPlaceInitially = [...systems];
+			const placedSystemIds = new Set<string>();
+
+			// IDs for your specific mocked connection
+			const OLIVA_ID = "3971b52ceebf43e7b960010b2f976e30";
+			const THINKY_ID = "6e5b93f546924feca5fd07c681b92f80";
+
+			// 1. Place OlivaSurface (if it exists)
+			const olivaSystemIndex = systemsToPlaceInitially.findIndex(s => s.id === OLIVA_ID);
+			if (olivaSystemIndex !== -1) {
+				const olivaSystem = systemsToPlaceInitially.splice(olivaSystemIndex, 1)[0];
+				const q = 0, r = 0;
+				const pixelPos = axialToPixel(q, r);
+				newHexagonPositions[olivaSystem.id] = { ...pixelPos, q, r };
+				occupiedAxialCoords.add(`${q},${r}`);
+				placedSystemIds.add(olivaSystem.id);
+				console.log(`Placed ${olivaSystem.hostname} (ID: ${olivaSystem.id}) at q:${q}, r:${r}`);
+			}
+
+			// 2. Place Thinky (if it exists and Oliva was placed) adjacently
+			const thinkySystemIndex = systemsToPlaceInitially.findIndex(s => s.id === THINKY_ID);
+			if (thinkySystemIndex !== -1 && newHexagonPositions[OLIVA_ID]) {
+				const thinkySystem = systemsToPlaceInitially.splice(thinkySystemIndex, 1)[0];
+				const olivaCoords = newHexagonPositions[OLIVA_ID];
+				let placedThinky = false;
+				for (const dir of axialDirections) {
+					const nq = olivaCoords.q + dir.q;
+					const nr = olivaCoords.r + dir.r;
+					if (!occupiedAxialCoords.has(`${nq},${nr}`)) {
+						const pixelPos = axialToPixel(nq, nr);
+						newHexagonPositions[thinkySystem.id] = { ...pixelPos, q: nq, r: nr };
+						occupiedAxialCoords.add(`${nq},${nr}`);
+						placedSystemIds.add(thinkySystem.id);
+						console.log(`Placed ${thinkySystem.hostname} (ID: ${thinkySystem.id}) at q:${nq}, r:${nr} (neighbor to Oliva)`);
+						placedThinky = true;
+						break;
+					}
+				}
+				if (!placedThinky) {
+					console.warn(`Could not place ${thinkySystem.hostname} adjacently to Oliva. All neighbors occupied. Placing with spiral.`);
+					systemsToPlaceInitially.unshift(thinkySystem); // Add back to be placed by spiral
+				}
+			}
+
+			// 3. Place remaining systems using a hexagonal spiral
+			let q = 0, r = 0;
+			let leg = 0; // current leg of the spiral
+			let stepInLeg = 0;
+			let dirIndex = 0; // initial direction
+
+			systemsToPlaceInitially.forEach(system => {
+				if (placedSystemIds.has(system.id)) return; // Should have been handled if it was Oliva/Thinky
+
+				// Find next free spot in spiral from (0,0)
+				q=0; r=0; leg=0; stepInLeg=0; dirIndex=0;
+				// Loop to find an actually free spot using spiral logic
+				while(occupiedAxialCoords.has(`${q},${r}`)) {
+					if (stepInLeg >= Math.floor(leg / 2) + 1 && leg !==0 ) { // For leg length definition that increases every 2 legs
+					// if (stepInLeg >= legLengths[leg]) { // Alternative: precomputed leg lengths
+						dirIndex = (dirIndex + 1) % 6;
+						stepInLeg = 0;
+						leg++; // This simple leg increment doesn't give standard spiral lengths. Needs fix for true spiral.
+					}
+					// A more robust spiral would recalculate leg based on ring number
+					// This simplified 'leg++' will make a less compact spiral.
+					// To ensure it moves, always take a step
+					q += axialDirections[dirIndex].q;
+					r += axialDirections[dirIndex].r;
+					stepInLeg++;
+					// Failsafe to prevent infinite loop if spiral logic is flawed for finding *next* step
+					// This part of spiral needs to be more robust for general purpose filling.
+					// The core issue with simple spiral is ensuring it tries *new* cells systematically.
+				}
+
+				const pixelPos = axialToPixel(q, r);
+				newHexagonPositions[system.id] = { ...pixelPos, q, r };
+				occupiedAxialCoords.add(`${q},${r}`);
+				placedSystemIds.add(system.id);
+				// console.log(`Placed ${system.hostname} (ID: ${system.id}) at q:${q}, r:${r} via spiral`);
+			});
+
+			hexagonPositions = newHexagonPositions;
 
 			if (svgElement && systems.length > 0) {
 				panzoomInstance = Panzoom(svgElement, {
@@ -299,14 +286,26 @@
 						><!-- viewBox is managed by panzoom -->
 						<g id="hexagon-layer"> 
 							{#each systems as system, i (system.id)}
-								{@const col = i % itemsPerRow}
-								{@const row = Math.floor(i / itemsPerRow)}
-								{@const x = col * (hexWidth + paddingX) + hexWidth / 2 + (row % 2 === 1 ? (hexWidth + paddingX) / 2 : 0)}
-								{@const y = row * (hexHeight * 0.75 + paddingY) + hexHeight / 2}
-
-								<g transform="translate({x}, {y})" on:click={() => selectSystem(system)} class="cursor-pointer">
+								{@const pos = hexagonPositions[system.id] || {x:0, y:0}} 
+								<g transform="translate({pos.x}, {pos.y})" on:click={() => selectSystem(system)} class="cursor-pointer">
 									<Hexagon {system} size={hexSize} selected={selectedSystem?.id === system.id} />
 								</g>
+							{/each}
+						</g>
+
+						<!-- Add Connection Lines Layer -->
+						<g id="connection-lines-layer" stroke="rgba(50, 50, 200, 0.6)" stroke-width="3">
+							{#each systems as sourceSystem (sourceSystem.id)}
+								{#if sourceSystem.connections && hexagonPositions[sourceSystem.id]}
+									{#each sourceSystem.connections as conn}
+										{@const targetSystemId = conn.target.host}
+										{@const targetPos = hexagonPositions[targetSystemId]}
+										{@const sourcePos = hexagonPositions[sourceSystem.id]}
+										{#if targetPos && sourcePos}
+											<line x1={sourcePos.x} y1={sourcePos.y} x2={targetPos.x} y2={targetPos.y} />
+										{/if}
+									{/each}
+								{/if}
 							{/each}
 						</g>
 					</svg>
@@ -412,13 +411,44 @@ URL: {pkg.url || 'N/A'}">{pkg.name}</li>
 						</div>
 						{/if}
 						
-						<!-- Placeholder for Users, can be expanded -->
-						{#if selectedSystem.users && selectedSystem.users.length > 0}
 						<div class="pt-2 mt-2 border-t">
-							<h3 class="text-md font-semibold mb-1 text-slate-700">Users ({selectedSystem.users.length}):</h3>
-							<p class="text-xs text-slate-500">(Details can be expanded here)</p>
+							<h3 class="text-md font-semibold mb-1 text-slate-700">Users ({selectedSystem.users?.length || 0}):</h3>
+							{#if selectedSystem.users && selectedSystem.users.length > 0}
+								<div class="space-y-2 max-h-48 overflow-y-auto">
+									{#each selectedSystem.users as userItem (userItem.id)}
+										<div class="p-1.5 border rounded bg-slate-50 text-xs">
+											<p class="font-medium text-slate-800">{userItem.name} <span class="text-slate-500">(ID: {userItem.id}, Type: {userItem.type})</span></p>
+											<p><strong>Shell:</strong> {userItem.shell || 'N/A'}</p>
+											{#if userItem.groups && userItem.groups.length > 0}
+												<p><strong>Groups:</strong> {userItem.groups.map(g => g.name).join(', ')}</p>
+											{/if}
+										</div>
+									{/each}
+								</div>
+							{:else}
+								<p class="text-xs text-slate-500">No users listed for this system.</p>
+							{/if}
 						</div>
-						{/if}
+
+						<div class="pt-2 mt-2 border-t">
+							<h3 class="text-md font-semibold mb-1 text-slate-700">System Connections ({selectedSystem.connections?.length || 0}):</h3>
+							{#if selectedSystem.connections && selectedSystem.connections.length > 0}
+								<div class="space-y-2 max-h-48 overflow-y-auto">
+									{#each selectedSystem.connections as conn (conn.target.host + conn.target.port + conn.protocol)}
+										{@const targetSystem = systems.find(s => s.id === conn.target.host)}
+										<div class="p-1.5 border rounded bg-slate-50 text-xs">
+											<p class="font-medium text-slate-800">
+												Connects to: {targetSystem ? targetSystem.hostname : conn.target.host}
+											</p>
+											<p><strong>Via:</strong> {conn.target.port}/{conn.protocol} ({conn.type})</p>
+											<p class="text-xs text-slate-500">Source: {conn.source.host}:{conn.source.port}</p>
+										</div>
+									{/each}
+								</div>
+							{:else}
+								<p class="text-xs text-slate-500">No specific system connections listed.</p>
+							{/if}
+						</div>
 
 					</div>
 				</div>

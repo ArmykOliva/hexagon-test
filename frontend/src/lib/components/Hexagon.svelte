@@ -1,6 +1,6 @@
 <script lang="ts">
-	// Import System and Service, but Package might not be needed if icons are from services only
-	import type { System, Service } from '../../routes/+page.svelte'; 
+	// Import System and Service from the new types.ts file
+	import type { System, Service } from '../../lib/types'; 
 
 	export let system: System;
 	export let size: number = 100;

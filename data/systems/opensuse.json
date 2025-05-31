@@ -1,0 +1,34 @@
+{
+    "hostname": "suse-desktop",
+    "distribution": {
+      "name": "openSUSE Leap",
+      "version": "15.5"
+    },
+    "packages": [
+      {
+        "name": "libreoffice",
+        "version": "7.2.5.2-150200.3.3.1"
+      }
+    ],
+    "services": [
+      {
+        "name": "libreoffice",
+        "connections": [
+          {
+            "source": { "host": "192.168.1.100", "port": 44321 },
+            "target": { "host": "192.168.1.1", "port": 22 },
+            "type": "client"
+          }
+        ]
+      }
+    ],
+    "vulnerabilities": [
+      {
+        "name": "CVE-2022-26305",
+        "severity": "critical",
+        "description": "LibreOffice before 7.2.7 allows code execution via crafted hyperlinks in documents.",
+        "references": ["https://nvd.nist.gov/vuln/detail/CVE-2022-26305"]
+      }
+    ]
+  }
+  

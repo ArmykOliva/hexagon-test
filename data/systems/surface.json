@@ -154,6 +154,14 @@
     "responses": [],
     "services": null,
     "antiques": [],
+    "connections": [
+        {
+        "source": { "host": "3971b52ceebf43e7b960010b2f976e30", "port": 80 },
+        "target": { "host": "6e5b93f546924feca5fd07c681b92f80", "port": 54321 },
+        "protocol": "tcp",
+        "type": "established"
+        }
+        ],
     "updates": [
             {
                     "name": "alsa-ucm-conf",
